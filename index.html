@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerChat App</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+
+<body>
+    <div id="videos">
+        <video class="video-player" id="user-1" autoplay playsinline></video>
+        <video class="video-player" id="user-2" autoplay playsinline></video>
+    </div>
+
+    <div class="btn-container">
+        <div id="form__container__header">
+            <div class="header-content">
+                <p id="link" style="margin-right: 10px;">ddd</p>
+                <svg xmlns="http://www.w3.org/2000/svg" id="btnLink" onclick="CopyToClipboard('link');return false;"
+                    style="cursor: pointer;" width="26" height="26" fill="currentColor" class="bi bi-link-45deg"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
+                    <path
+                        d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" />
+                </svg>
+            </div>
+            <p class="bottom__content">
+                Updating environment variables and options
+                To update environment variables or PM2 options, specify the --update-env CLI option
+            </p>
+        </div>
+
+        <div id="controls">
+            <div class="control-container" id="camera-btn">
+                <img src="icons/camera.png" />
+            </div>
+
+            <div class="control-container" id="mic-btn">
+                <img src="icons/mic.png" />
+            </div>
+
+            <a href="lobby.html">
+                <div class="control-container" id="leave-btn">
+                    <img src="icons/phone.png" />
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+<script src="agora-rtm-sdk-1.5.1.js"></script>
+<script src="main.js"></script>
+<script>
+    function CopyToClipboard(id) {
+        var r = document.createRange();
+        r.selectNode(document.getElementById(id));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        alert('link copy to clipboard')
+    }
+</script>
+
+</html>

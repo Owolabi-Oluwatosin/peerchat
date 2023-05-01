@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerChat</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="lobby.css" />
+</head>
+
+<body>
+    <main id="lobby-container">
+        <div id="form-container">
+            <div id="form__container__header">
+                <p id="link" style="margin-left: 10px;"></p>
+                <svg xmlns="http://www.w3.org/2000/svg" id="btnLink" onclick="CopyToClipboard('link');return false;"
+                    style="margin-right: 10px;" width="26" height="26" fill="currentColor" class="bi bi-link-45deg"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
+                    <path
+                        d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" />
+                </svg>
+            </div>
+
+            <div id="form__content__wrapper">
+                <div class="form-input">
+                    <div class="custom-select">
+                        <select id="select-call">
+                            <option>Start a meeting</option>
+                            <option value="instant">Start an instant meeting</option>
+                            <option value="later">Create a meeting for later</option>
+                        </select>
+                    </div>
+                    <span class="span-text">0r</span>
+                    <form class="join-input" id="join-form">
+                        <input id="inviteLink" type="text" name="invite_link" placeholder="Enter a code or link" />
+                        <input type="submit" id="link-id" value="Join" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    let form = document.getElementById('join-form');
+    let select = document.getElementById('select-call');
+    let invite_link;
+
+    // declare all characters
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    function generateString(length) {
+        let result = '';
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        return result;
+    }
+
+    select.addEventListener('change', () => {
+        let selectedValue = select.value;
+        let inviteCode = generateString(12);
+        //console.log(select.value)
+        if (selectedValue == 'later') {
+            let join = `/index.html?room=${inviteCode}`
+            let join_url = window.location.origin + join
+            document.getElementById('btnLink').style.color = '#4ade80'
+            document.getElementById("link").innerHTML = join_url
+        } else if (selectedValue == 'instant') {
+            window.location = `/index.html?room=${inviteCode}`
+        }
+    });
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        let invite_link = e.target.invite_link.value
+        if (invite_link === '') {
+            alert('Enter link or code to join meeting')
+            return;
+        }
+        window.location = invite_link
+    });
+
+
+    // form.addEventListener('submit', (e) => {
+    //#4ade80
+    //     e.preventDefault()
+    //     let inviteCode = e.target.invite_link.value
+    //     let join = `/index.html?room=${inviteCode}`
+    //     let join_url = window.location.origin + join
+    //     document.getElementById("link").innerHTML = join_url
+    //     console.log(window.location)
+    //     // window.location = `index.html?room=${inviteCode}`
+    // })
+
+    function CopyToClipboard(id) {
+        var r = document.createRange();
+        r.selectNode(document.getElementById(id));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        alert('link copy to clipboard')
+    }
+</script>
+
+</html>
